@@ -1,0 +1,17 @@
+%n - 换行   
+%m - 日志内容      
+%p - 日志级别(FATAL,   ERROR,   WARN,   INFO,   DEBUG   or   custom)       
+%r - 程序启动到现在的毫秒数    
+%% - percent   sign   in   output   
+%t - 当前线程名   
+%d   -  日期和时间,    
+    常用的格式有 %d{DATE}, %d{ABSOLUTE}, %d{HH:mm:ss,SSS}, %d{ddMMyyyy HH:mm:ss,SSS}。。。   
+%l - 同 %F%L%C%M   
+%F - java源文件名   
+%L - java源码行数   
+%C - java类名,%C{1} 输出最后一个元素   
+%M-java方法名  
+
+    [%d{HH\:mm\:ss\:SSS}][%p] (%c\:%L) - %m%n  
+
+	[%d{HH\:mm\:ss\:SSS}][%p] (%c\:%L) - %m%n输出格式为：[08:58:59:412][INFO] (com.soon.action:35) - Server

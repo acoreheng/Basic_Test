@@ -1,0 +1,22 @@
+首先import该类：
+
+<%@ page import="com.paizuo.framework.util.Token" %>
+
+表单包含隐藏的token字符串:
+
+<form>
+......
+<input type="hidden" name="<%=Token.TOKEN_STRING_NAME %>" value="<%=Token.getTokenString(session) %>">
+......
+</form>
+
+在Server端action中进行检验。
+
+if(Token.isTokenStringValid(request.getParameter(Token.TOKEN_STRING_NAME), request.getSession())){
+//进行正常业务流程
+}
+else{
+//进行防重复提交处理流程
+}
+
+完毕。

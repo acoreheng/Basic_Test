@@ -1,0 +1,81 @@
+设计蜂巢IP地址查询接口：http://www.hujuntao.com/api/ip/ip.php
+腾讯IP地址查询接口：http://fw.qq.com/ipaddress
+新浪IP地址查询接口：http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js
+搜狐IP地址查询接口：http://pv.sohu.com/cityjson
+谷歌IP地址查询接口：http://j.maxmind.com/app/geoip.js
+有道IP地址查询接口：http://www.youdao.com/smartresult-xml/search.s
+1616 IP地址查询接口：http://w.1616.net/chaxun/iptolocal.php
+126 http://ip.ws.126.net/ipquery
+hao123 http://app.hao123.com/ipquery/getcity.php?rtype=2
+设计蜂巢接口调用方法
+
+API请求地址 : http://www.hujuntao.com/api/ip/ip.php?参数
+
+参数说明:
+
+IP : IP地址 可选
+format : 输出格式 json 可选 默认为JS
+JSON调用示例：
+请求地址：http://www.hujuntao.com/api/ip/ip.php?callback=jQuery17107324279078748077_1327024991339&format=json&_=1327024991363
+
+{
+“ip”: “117.89.35.58″,
+“province”: “\u6c5f\u82cf”,
+“city”: “\u5357\u4eac”
+}
+腾讯接口调用方法
+
+<script src="http://fw.qq.com/ipaddress"></script>
+<script type="text/javascript">
+//反回格式如下：
+//var IPData = new Array("117.89.35.98","","江苏省","南京市");
+console.log(IPData[0]+','+IPData[2]+','+IPData[3]) //117.89.35.98,江苏省,南京市
+</script>
+该方法已经不可用，访问http://fw.qq.com/ipaddre显示“The page you are looking for is temporarily unavailable.
+Please try again later.”。腾讯对Referer做了判断，虽然可以通过PHP伪造Referer，但是实际测试中获得的是服务器的IP地址而不是客户端的IP地址。我们一起鄙视一下腾讯。╭∩╮(︶︿︶)╭∩╮
+
+新浪接口调用方法
+
+<script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+<script type="text/javascript">
+//format参数设置返回格式 js/json
+//ip 要查询IP 可选
+//反回格式如下：
+//var remote_ip_info = {"ret":1,"start":"117.89.35.0","end":"117.89.35.255","country":"\u4e2d\u56fd","province":"\u6c5f\u82cf","city":"\u5357\u4eac","district":"\u767d\u4e0b","isp":"\u7535\u4fe1","type":"","desc":""};
+console.log(remote_ip_info["country"]+','+remote_ip_info["province"]+"省"+','+remote_ip_info["city"]+"市")//中国,江苏省,南京市
+</script>
+搜狐接口调用方法
+
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script type="text/javascript">
+//默认为GBK可通过ie参数设置编码
+console.log(returnCitySN["cip"]+','+returnCitySN["cname"])//117.89.35.98,江苏省南京市
+</script>
+谷歌接口调用方法
+
+据说是谷歌的，不知道是不是真的。
+
+<script src="http://j.maxmind.com/app/geoip.js"></script>
+<script type="text/javascript">
+console.log(geoip_country_name()+','+geoip_region_name()+','+geoip_city())//China,Jiangsu,Nanjing
+</script>
+有道接口调用方法
+
+调用接口示例：http://www.youdao.com/smartresult-xml/search.s?type=ip&q=123.233.157.9
+
+返回XML数据
+
+<?xml version="1.0" encoding="gbk"?>
+<smartresult>
+<product type="ip">
+<ip>123.233.157.9</ip>
+<location>山东省济南市 网通</location>
+</product>
+</smartresult>
+或者
+
+http://www.youdao.com/smartresult-xml/search.s?jsFlag=true&keyfrom=163.com&event=fYodaoCallBack&type=ip&q=192.168.1.1
+
+返回JSON数据
+
+fYodaoCallBack(1, {‘product’:'ip’,'ip’:’192.168.1.1′,’location’:'局域网 对方和您在同一内部网’} , ”);
